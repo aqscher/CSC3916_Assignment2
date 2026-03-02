@@ -110,7 +110,7 @@ router.route('/movies')
         o.env = process.env.UNIQUE_KEY;
         res.json(o);
     })
-    .post((req, res) => {
+    .post(authJwtController.isAuthenticated, (req, res) => {
         var o = getJSONObjectForMovieRequirement(req);
         o.status = 200;
         o.message = "movie saved";
