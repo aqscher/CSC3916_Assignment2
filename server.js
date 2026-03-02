@@ -4,6 +4,8 @@ File: Server.js
 Description: Web API scaffolding for Movie API
  */
 
+require('dotenv').config();
+
 var express = require('express');
 var http = require('http');
 var bodyParser = require('body-parser');
@@ -56,6 +58,11 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/signin', (req, res) => {
+    if (!req.body.username || !req.body.password) {
+        res.status(401).send({success: false, msg: 'Please include both username and password to signin.'});
+        return;
+    }
+
     var user = db.findOne(req.body.username);
 
     if (!user) {
